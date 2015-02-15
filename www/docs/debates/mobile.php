@@ -33,7 +33,7 @@ if (get_http_var("d") != "") {
 	$LIST->display('date', $args);
 	}
 	
-} elseif (get_http_var('id') != "") {
+} elseif (get_http_var('id') != "" || get_http_var('oaid') !="") {
 	// We have an id so show that item.
 	// Could be a section id (so we get a list of all the subsections in it),
 	// or a subsection id (so we'd get the whole debate),
@@ -47,7 +47,12 @@ if (get_http_var("d") != "") {
 		'member_id' => get_http_var('m'),	// Member's speeches to be highlighted.
 		'glossarise' => 1	// Glossary is on by default
 	);
-
+	
+	if(get_http_var('oaid') != "")
+	{
+	    $args['gid']=get_http_var('oaid');
+	}
+ 
 	if (preg_match('/speaker:(\d+)/', get_http_var('s'), $mmm))
 		$args['person_id'] = $mmm[1];
 
