@@ -191,7 +191,8 @@ foreach ($alertdata as $alertitem) {
 				$result['date'] = format_date($row['hdate'], SHORTDATEFORMAT);
 				$result['title'] = $row['parent']['body'];
 				$result['body'] = $row['body'];
-				$result['url'] = 'http://www.openaustralia.org' . $row['listurl'];
+				// replace ?id= with ?oaid to fix problems with webmail, see /docs/debates/
+				$result['url'] = 'http://www.openaustralia.org' . str_replace("id=","oaid=",$row['listurl']);
 				if (isset($row['speaker']) && count($row['speaker']))
 				    $result['speaker'] = html_entity_decode(member_full_name($row['speaker']['house'], $row['speaker']['title'], $row['speaker']['first_name'], $row['speaker']['last_name'], $row['speaker']['constituency']));
 				
@@ -394,6 +395,4 @@ function extract_content_between_tokens($content,$start_token,$end_token,$includ
         $result = substr($content, $start_position, $end_position - $start_position);
         return $result;
 }
-
-
 ?>
